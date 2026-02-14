@@ -1,0 +1,31 @@
+global:
+  scrape_interval: 15s        
+  evaluation_interval: 15s      
+  scrape_timeout: 10s            
+
+# rule_files:
+#   - "alerts.yml"
+
+
+scrape_configs:
+  - job_name: 'order-service'
+    static_configs:
+      - targets: ['order-service:8001']
+        labels:
+          service: 'order'
+          environment: 'development'
+    metrics_path: /metrics
+    scrape_interval: 10s
+
+  - job_name: 'payment-service'
+    static_configs:
+      - targets: ['payment-service:8000']
+        labels:
+          service: 'payment'
+          environment: 'development'
+    metrics_path: /metrics
+    scrape_interval: 10s
+
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
